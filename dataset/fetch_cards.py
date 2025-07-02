@@ -4,7 +4,6 @@ import requests
 from ratelimit import limits
 from tenacity import retry, wait_random
 
-@retry(wait=wait_random(60,80))
 @limits(calls=5, period=60)
 def get_bulk_cards()-> list[str] | None:
     """
@@ -25,5 +24,3 @@ def get_bulk_cards()-> list[str] | None:
             return content
         else:
             raise RuntimeError("Request returned code " + str(file_response.status_code))
-
-print(get_bulk_cards())
